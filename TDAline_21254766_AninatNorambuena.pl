@@ -101,3 +101,53 @@ lineLength(Line, Length, Distance, Cost):-
     lineLargo(ListaSection, Length),
     lineDistancia(ListaSection, Distance),
     lineCosto(ListaSection, Cost).
+
+% RF6: lineSectionLength
+%
+% Descripcion:
+% Dominio:
+% Predicado:
+% Metas:
+% Submetas:
+% Clausulas:
+lineSectionLength(Line, Station1Name, Station2Name, Path, Distance, Cost):-
+    getLineSections(Line, ListaSections),
+    cortarListaSections(ListaSections, Station1Name, Station2Name, Path),
+    lineDistancia(Path, Distance),
+    lineCosto(Path, Cost).
+
+% RF7: lineAddSection
+%
+% Descripcion:
+% Dominio:
+% Predicado:
+% Metas:
+% Submetas:
+% Clausulas:
+lineAddSection(Line, Section, LineOut):-
+    getLineSections(Line, ListaSections),
+    verificarAusencia(ListaSections, Section),
+    listAdd(ListaSections, Section, NuevaListaSection),
+    getLineId(Line, LineID),
+    getLineName(Line, LineName),
+    getLineRailType(Line, LineRailType),
+    LineOut = [LineID, LineName, LineRailType, NuevaListaSection].
+
+% RF8: isLine
+%
+% Descripcion:
+% Dominio:
+% Predicado:
+% Metas:
+% Submetas:
+% Clausulas:
+isLine([Id, Name, RailType, Sections]):-
+    number(Id),
+    string(Name),
+    string(RailType),
+    comprobacionId(Sections),
+    comprobacionNombre(Sections),
+    comprobacionSecciones(Sections),
+    comprobacionEstaciones(Sections),
+    comprobacionExtremosDeLinea(Sections),
+    comprobacionLlegada(Sections).

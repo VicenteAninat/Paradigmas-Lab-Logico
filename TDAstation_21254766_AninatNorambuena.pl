@@ -1,3 +1,5 @@
+:- module(tdastation_21254766_AninatNorambuena,
+         [station/1, encontrarEstacion/3, getStationId/2, getStationName/2, getStationType/2]).
 %TDA station
 
 % Descripcion:
@@ -36,7 +38,23 @@ station(Id, Name, Type, StopTime, [Id, Name, Type, StopTime]):-
 % Metas:
 % Submetas:
 % Clausulas:
+getStationId([Id,_,_,_], Id).
+
+% Descripcion:
+% Dominio:
+% Predicado:
+% Metas:
+% Submetas:
+% Clausulas:
 getStationName([_,Name,_,_], Name).
+
+% Descripcion:
+% Dominio:
+% Predicado:
+% Metas:
+% Submetas:
+% Clausulas:
+getStationType([_,_,Type,_], Type).
 
 % Pertenencia
 %
@@ -59,53 +77,6 @@ station([Id, Name, Type, StopTime]):-
 % Metas:
 % Submetas:
 % Clausulas:
-objetivo(X, Y):- X = Y.
-filtrar(Elem, Lista, R):- exclude(objetivo(Elem), Lista, R).
-
-% Descripcion:
-% Dominio:
-% Predicado:
-% Metas:
-% Submetas:
-% Clausulas:
-deleteDuplicate([],[]). %Caso base
-deleteDuplicate([H|L], R):- filtrar(H, L, LFiltrada), R=[H|Y], deleteDuplicate(LFiltrada, Y).
-
-% Descripcion:
-% Dominio:
-% Predicado:
-% Metas:
-% Submetas:
-% Clausulas:
-cortarListaInferior([], _, []).
-cortarListaInferior([H|T], Elem, NuevaLista):-
-    H \= Elem,
-    cortarListaInferior(T, Elem, NuevaLista).
-cortarListaInferior([H|T], Elem, NuevaLista):-
-    H = Elem,
-    NuevaLista = [H|T].
-
-% Descripcion:
-% Dominio:
-% Predicado:
-% Metas:
-% Submetas:
-% Clausulas:
-cortarListaSuperior([], _, []).
-cortarListaSuperior([H|T], Elem, NuevaLista):-
-    H \= Elem,
-    cortarListaSuperior(T, Elem, NuevaLista2),
-    NuevaLista = [H|NuevaLista2].
-cortarListaSuperior([H|_], Elem, NuevaLista):-
-    H = Elem,
-    NuevaLista = [H].
-
-% Descripcion:
-% Dominio:
-% Predicado:
-% Metas:
-% Submetas:
-% Clausulas:
 encontrarEstacion([H|T], Nombre, Estacion):-
     getStationName(H, NombreEstacion),
     Nombre \= NombreEstacion,
@@ -114,25 +85,3 @@ encontrarEstacion([H|_], Nombre, Estacion):-
     getStationName(H, NombreEstacion),
     Nombre = NombreEstacion,
     H = Estacion.
-
-% Descripcion:
-% Dominio:
-% Predicado:
-% Metas:
-% Submetas:
-% Clausulas:
-listAdd([],Elem, [Elem]).
-listAdd([H|T], Elem, NuevaLista):-
-    listAdd(T, Elem, NuevaLista2),
-    NuevaLista = [H, NuevaLista2].
-
-% Descripcion:
-% Dominio:
-% Predicado:
-% Metas:
-% Submetas:
-% Clausulas:
-verificarAusencia([],_).
-verificarAusencia([H|T], Elem):-
-    H \= Elem,
-    verificarAusencia(T, Elem).

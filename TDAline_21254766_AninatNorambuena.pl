@@ -1,5 +1,8 @@
-:- consult("TDAstation_21254766_AninatNorambuena.pl").
-:- consult("TDAsection_21254766_AninatNorambuena.pl").
+:- module(tdaline_21254766_AninatNorambuena,
+         []).
+:- use_module("utilidades_21254766_AninatNorambuena").
+:- use_module("TDAstation_21254766_AninatNorambuena").
+:- use_module("TDAsection_21254766_AninatNorambuena").
 %TDA line
 
 % Constructor
@@ -133,6 +136,17 @@ lineAddSection(Line, Section, LineOut):-
     getLineRailType(Line, LineRailType),
     LineOut = [LineID, LineName, LineRailType, NuevaListaSection].
 
+comprobacionExtremosDeLinea(ListaSections):-
+    last(ListaSections, UltimaSection),
+    reverse(ListaSections, ListaSectionsInv),
+    last(ListaSectionsInv, PrimeraSection),
+    getSectionPoint1(PrimeraSection, PrimeraEstacion),
+    getSectionPoint2(UltimaSection, UltimaEstacion),
+    getStationType(PrimeraEstacion, PrimeraEstacionType),
+    getStationType(UltimaEstacion, UltimaEstacionType),
+    PrimeraEstacionType = "t",
+    UltimaEstacionType = "t".
+
 % RF8: isLine
 %
 % Descripcion:
@@ -141,13 +155,15 @@ lineAddSection(Line, Section, LineOut):-
 % Metas:
 % Submetas:
 % Clausulas:
-isLine([Id, Name, RailType, Sections]):-
-    number(Id),
-    string(Name),
-    string(RailType),
-    comprobacionId(Sections),
-    comprobacionNombre(Sections),
-    comprobacionSecciones(Sections),
-    comprobacionEstaciones(Sections),
-    comprobacionExtremosDeLinea(Sections),
-    comprobacionLlegada(Sections).
+isLine(Line):-
+    getLineId(Line, LineId),
+    getLineName(Line, LineName),
+    getLineRailType(Line, LineRailType),
+    getLineSections(Line, LineSections),
+    number(LineId),
+    string(LineName),
+    string(LineRailType),
+    comprobacionIdYNombre(LineSections),
+    comprobacionExtremosDeLinea(LineSections);
+    comprobacionLineaCircular(LineSections),
+    comprobacionLlegada(LineSections).

@@ -1,4 +1,7 @@
-:- consult("TDAstation_21254766_AninatNorambuena.pl").
+:- module(tdasection_21254766_AninatNorambuena,
+         [listaSections/1, cortarListaSections/4, getSectionPoint1/2, getSectionPoint2/2, getSectionDistance/2, getSectionCost/2, comprobacionIdYNombre/3, comprobacionIdYNombre/1]).
+:- use_module("utilidades_21254766_AninatNorambuena").
+:- use_module("TDAstation_21254766_AninatNorambuena").
 %TDA section
 
 % Constructor
@@ -13,6 +16,7 @@
 section(Point1, Point2, Distance, Cost, [Point1, Point2, Distance, Cost]):-
     station(Point1),
     station(Point2),
+    Point1 \= Point2,
     number(Distance),
     Distance >= 0,
     number(Cost),
@@ -142,3 +146,37 @@ cortarListaSections(ListaSections, Nombre1, Nombre2, NuevaListaSections):-
     encontrarSection2(ListaSections, Station2, Section2),
     cortarListaInferior(ListaSections, Section1, ListaSections1),
     cortarListaSuperior(ListaSections1, Section2, NuevaListaSections).
+
+% Descripcion: Comprueba la no repeticion de IDs en las estaciones de
+% una lista de secciones
+% Predicado:
+% Metas:
+% Submetas:
+% Clausulas:
+comprobacionIdYNombre([],_,_,_).
+comprobacionIdYNombre([H|T], ListaIDs, ListaNombres, EstacionesAnteriores):-
+    getSectionPoint1(H, Estacion1),
+    getStationId(Estacion1, Id1),
+    getStationName(Estacion1, Nombre1),
+    (not(member(Id1, ListaIDs)), not(member(Nombre1, ListaNombres)));
+    member(Estacion1, EstacionesAnteriores),
+    getSectionPoint2(H, Estacion2),
+    getStationId(Estacion2, Id2),
+    getStationName(Estacion2, Nombre2),
+    (not(member(Id2, ListaIDs)), not(member(Nombre2, ListaNombres)));
+    member(Estacion2, EstacionesAnteriores),
+    append(ListaIDs, [Id1, Id2], NuevaListaIDs),
+    append(EstacionesAnteriores, [Estacion1, Estacion2], NuevaEstacionesAnteriores),
+    append(ListaNombres, [Nombre1, Nombre2], NuevaListaNombres),
+    comprobacionIdYNombre(T, NuevaListaIDs, NuevaListaNombres, NuevaEstacionesAnteriores).
+comprobacionIdYNombre([H|T]):-
+    getSectionPoint1(H, Estacion1),
+    getStationId(Estacion1, Id1),
+    getStationName(Estacion1, Nombre1),
+    getSectionPoint2(H, Estacion2),
+    getStationId(Estacion2, Id2),
+    getStationName(Estacion2, Nombre2),
+    ListaIDs = [Id1, Id2],
+    ListaNombres = [Nombre1, Nombre2],
+    ListaEstacionesAnteriores = [Estacion1, Estacion2],
+    comprobacionIdYNombre(T, ListaIDs, ListaNombres, ListaEstacionesAnteriores).

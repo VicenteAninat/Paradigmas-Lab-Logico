@@ -1,5 +1,5 @@
 :- module(tdapcar_21254766_AninatNorambuena,
-         []).
+         [pcar/5]).
 %TDA pcar
 
 carType(X):-

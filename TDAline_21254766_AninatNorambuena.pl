@@ -1,5 +1,5 @@
 :- module(tdaline_21254766_AninatNorambuena,
-         []).
+         [line/5, lineLength/4]).
 :- use_module("utilidades_21254766_AninatNorambuena").
 :- use_module("TDAstation_21254766_AninatNorambuena").
 :- use_module("TDAsection_21254766_AninatNorambuena").
@@ -146,6 +146,22 @@ comprobacionExtremosDeLinea(ListaSections):-
     getStationType(UltimaEstacion, UltimaEstacionType),
     PrimeraEstacionType = "t",
     UltimaEstacionType = "t".
+
+% Descripcion:
+% Dominio:
+% Predicado:
+% Metas:
+% Submetas:
+% Clausulas:
+comprobacionLineaCircular(ListaSections).
+
+% Descripcion:
+% Dominio:
+% Predicado:
+% Metas:
+% Submetas:
+% Clausulas:
+comprobacionLlegada(ListaSections).
 
 % RF8: isLine
 %

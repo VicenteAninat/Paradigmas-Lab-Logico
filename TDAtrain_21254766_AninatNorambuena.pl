@@ -1,9 +1,7 @@
 :- module(tdatrain_21254766_AninatNorambuena,
-         []).
-:- use_module("TDAstation_21254766_AninatNorambuena").
-:- use_module("TDAsection_21254766_AninatNorambuena").
-:- use_module("TDAline_21254766_AninatNorambuena").
-:- use_module("TDApcar_21254766_AninatNorambuena").
+         [train/6, trainAddCar/4, trainRemoveCar/3, isTrain/1, trainCapacity/2]).
+:- use_module(utilidades_21254766_AninatNorambuena).
+:- use_module(tdapcar_21254766_AninatNorambuena).
 %TDA train
 
 % Constructor
@@ -22,7 +20,47 @@ train(Id, Maker, RailType, Speed, Pcars, [Id, Maker, RailType, Speed, Pcars]):-
     number(Speed),
     Speed >= 0,
     carrosValidos(Pcars).
+% Selectores
+%
+% Descripcion:
+% Dominio:
+% Predicado:
+% Metas:
+% Submetas:
+% Clausulas:
+getTrainId([Id,_,_,_,_], Id).
 
+% Descripcion:
+% Dominio:
+% Predicado:
+% Metas:
+% Submetas:
+% Clausulas:
+getTrainMaker([_,Maker,_,_,_], Maker).
+
+% Descripcion:
+% Dominio:
+% Predicado:
+% Metas:
+% Submetas:
+% Clausulas:
+getTrainRailType([_,_,RailType,_,_], RailType).
+
+% Descripcion:
+% Dominio:
+% Predicado:
+% Metas:
+% Submetas:
+% Clausulas:
+getTrainSpeed([_,_,_,Speed,_], Speed).
+
+% Descripcion:
+% Dominio:
+% Predicado:
+% Metas:
+% Submetas:
+% Clausulas:
+getTrainPcar([_,_,_,_,Pcars], Pcars).
 
 % Modificadores
 % RF11: trainAddCar
@@ -39,7 +77,7 @@ trainAddCar(Train, Pcar, Position, TrainOut):-
     getTrainPcar(Train, ListaPcar),
     verificarAusencia(ListaPcar, Pcar),
     verificarPosicion(ListaPcar, Position),
-    agregarElemListaIndice(ListaPcar, Position, NuevaListaPcar),
+    agregarElemListaIndice(ListaPcar, Pcar, Position, NuevaListaPcar),
     getTrainId(Train, TrainId),
     getTrainMaker(Train, TrainMaker),
     getTrainRailType(Train, TrainRailType),
@@ -80,7 +118,7 @@ isTrain(Train):-
     getTrainMaker(Train, TrainMaker),
     getTrainRailType(Train, TrainRailType),
     getTrainSpeed(Train, TrainSpeed),
-    getTrainPcars(Train, TrainPcars),
+    getTrainPcar(Train, TrainPcars),
     number(TrainId),
     string(TrainMaker),
     string(TrainRailType),
@@ -89,6 +127,19 @@ isTrain(Train):-
     carrosValidos(TrainPcars).
 
 % Auxiliares
+%
+% Descripcion:
+% Dominio:
+% Predicado:
+% Metas:
+% Submetas:
+% Clausulas:
+capacidadTren([],0).
+capacidadTren([H|T], Capacidad):-
+    getPcarCapacity(H, Cap1),
+    capacidadTren(T, Cap2),
+    Capacidad = Cap1 + Cap2.
+
 % RF14: trainCapacity
 %
 % Descripcion:
@@ -98,5 +149,5 @@ isTrain(Train):-
 % Submetas:
 % Clausulas:
 trainCapacity(Train, Capacity):-
-    getTrainPcars(Train, TrainPcars),
+    getTrainPcar(Train, TrainPcars),
     capacidadTren(TrainPcars, Capacity).

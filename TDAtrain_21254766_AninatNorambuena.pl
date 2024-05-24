@@ -20,6 +20,7 @@ train(Id, Maker, RailType, Speed, Pcars, [Id, Maker, RailType, Speed, Pcars]):-
     number(Speed),
     Speed >= 0,
     carrosValidos(Pcars).
+
 % Selectores
 %
 % Descripcion:

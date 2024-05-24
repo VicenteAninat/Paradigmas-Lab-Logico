@@ -1,5 +1,5 @@
 :- module(tdasubway_21254766_AninatNorambuena,
-         []).
+         [subway/3]).
 :- use_module("utilidades_21254766_AninatNorambuena").
 %TDA subway
 

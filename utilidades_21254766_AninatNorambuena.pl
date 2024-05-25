@@ -1,5 +1,5 @@
 :- module(utilidades_21254766_AninatNorambuena,
-         [deleteDuplicate/2, cortarListaInferior/3, cortarListaSuperior/3, listAdd/3, verificarAusencia/2, verificarAusenciaListas/2]).
+         [deleteDuplicate/2, cortarListaInferior/3, cortarListaSuperior/3, listAdd/3, verificarAusencia/2, verificarAusenciaListas/2, cortarExtremos/2, verificarPosicion/2, agregarElemListaIndice/4, eliminarElemListaIndice/3]).
 % Utilidades
 
 % Descripcion:
@@ -77,7 +77,58 @@ verificarAusencia([H|T], Elem):-
 % Metas:
 % Submetas:
 % Clausulas:
-verificarAusenciaListas([],[]).
+verificarAusenciaListas(_,[]).
+verificarAusenciaListas([],_).
 verificarAusenciaListas(List, [H|T]):-
-    not(member(H, List)),
-    verificarAusenciaListas(List, [T]).
+    \+ member(H, List),
+    verificarAusenciaListas(List, T).
+
+% Descripcion:
+% Dominio:
+% Predicado:
+% Metas:
+% Submetas:
+% Clausulas:
+cortarExtremos([H|T], ListaCortada):-
+    Primero = H,
+    last([H|T], Ultimo),
+    select(Primero, [H|T], Lista1),
+    reverse(Lista1, ListaInv),
+    select(Ultimo, ListaInv, ListaFinalInv),
+    reverse(ListaFinalInv, ListaCortada).
+
+% Descripcion:
+% Dominio:
+% Predicado:
+% Metas:
+% Submetas:
+% Clausulas:
+verificarPosicion(Lista, Posicion):-
+    length(Lista, X),
+    Posicion =< X.
+
+% Descripcion:
+% Dominio:
+% Predicado:
+% Metas:
+% Submetas:
+% Clausulas:
+agregarElemListaIndice(Lista, Elem, Indice, NuevaLista):-
+    Indice = 0,
+    ListaElem = [Elem],
+    append(ListaElem, Lista, NuevaLista).
+agregarElemListaIndice([H|T], Elem, Indice, NuevaLista):-
+    Indice \= 0,
+    Uno = 1,
+    Indice2 is Indice - Uno,
+    agregarElemListaIndice(T, Elem, Indice2, Lista2),
+    append([H], Lista2, NuevaLista).
+
+% Descripcion:
+% Dominio:
+% Predicado:
+% Metas:
+% Submetas:
+% Clausulas:
+eliminarElemListaIndice(Lista, Indice, NuevaLista):-
+    nth0(Indice, Lista, _, NuevaLista).

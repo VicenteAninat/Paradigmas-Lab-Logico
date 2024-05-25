@@ -18,8 +18,7 @@ train(Id, Maker, RailType, Speed, Pcars, [Id, Maker, RailType, Speed, Pcars]):-
     string(Maker),
     string(RailType),
     number(Speed),
-    Speed >= 0,
-    carrosValidos(Pcars).
+    Speed >= 0.
 
 % Selectores
 %
@@ -139,7 +138,7 @@ capacidadTren([],0).
 capacidadTren([H|T], Capacidad):-
     getPcarCapacity(H, Cap1),
     capacidadTren(T, Cap2),
-    Capacidad = Cap1 + Cap2.
+    Capacidad is Cap1 + Cap2.
 
 % RF14: trainCapacity
 %

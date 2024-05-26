@@ -4,17 +4,17 @@
 /*
 Descripcion: Predicado que define un tipo de estacion de metro de tipo
  c (combinacion), m (mantencion), r (regular) o t (terminal)
-Dominio: X(string)
+Dominio: X(atomo)
 Predicado: type(X)
 Metas: type/1
 Submetas:
 Clausulas:
 */
 type(X):-
-    X = "c";
-    X = "m";
-    X = "r";
-    X = "t".
+    X == c;
+    X == m;
+    X == r;
+    X == t.
 
 % Constructor
 /*

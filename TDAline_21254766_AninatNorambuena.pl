@@ -187,8 +187,8 @@ comprobacionExtremosDeLinea(ListaSections):-
     getSectionPoint2(UltimaSection, UltimaEstacion),
     getStationType(PrimeraEstacion, PrimeraEstacionType),
     getStationType(UltimaEstacion, UltimaEstacionType),
-    PrimeraEstacionType == t,
-    UltimaEstacionType == t.
+    (PrimeraEstacionType == t; PrimeraEstacionType == c),
+    (UltimaEstacionType == t; UltimaEstacionType == c).
 
 /*
 Descripcion: Predicado que comprueba que una linea sea circular en base

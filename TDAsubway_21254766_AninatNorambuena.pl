@@ -1,5 +1,5 @@
 :- module(tdasubway_21254766_AninatNorambuena,
-         [subway/3, subwayAddDriver/3, subwayAddLine/3, subwayAddTrain/3]).
+         [subway/3, subwayAddDriver/3, subwayAddLine/3, subwayAddTrain/3, subwayToString/2]).
 :- use_module("utilidades_21254766_AninatNorambuena").
 % TDA subway
 
@@ -145,4 +145,9 @@ Submetas:
 Clausulas:
 */
 subwayToString(Sub, StrOut):-
-    atomics_to_string(Sub, StrOut).
+    getSubwayId(Sub, Id),
+    getSubwayNombre(Sub, Nombre),
+    getSubwayTrain(Sub, Trains),
+    getSubwayLine(Sub, Lines),
+    getSubwayDriver(Sub, Drivers),
+    atomic_list_concat(["Subway(", Id, ", ", Nombre, ", Trains: ", Trains, ", Lines: ", Lines, ", Drivers: ", Drivers, ")"], StrOut).
